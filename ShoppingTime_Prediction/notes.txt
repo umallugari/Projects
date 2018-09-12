@@ -1,0 +1,46 @@
+Comments/Concerns:
+-----------------
+- The ipynb Jupyter notebooks contain observations and choices.
+
+- There is an unhandled inconsistency in store_id <-> store_primary_category.
+  For eg., there is one store_id with mexican and indian cuisine. 
+  Which cuisine should be picked in this case? Should it be picked based on total_delivery_time?
+  Should it be picked on order value? This is something I would like to explore further.
+
+- There are a lot of rows in historical data which have the runner related columns as NA that were 
+  removed during training. This may have affected predictions.
+
+Recommendations:
+----------------
+
+- From KMeans clustering (input data from recommendation_analysis.csv) of predictions and data_to_predict it seems that 
+  the total_busy_runners to close to total_onshift_runners, irrespective of time of the day. It helps to 
+  have more runners.
+
+Packages:
+---------
+Apache Spark (2.3.1)
+
+Files:
+------
+  log4j.properties	- Spark configuration file 
+
+  For Part-1:
+  ----------
+  create_model.ipynb	- Exploration
+  create_model.py	- Code
+  create_model_output.txt - Console output of running create_model.py 
+
+  Command to run:
+  spark-submit --master local[*] --files log4j.properties create_model.py
+
+  For Part-2:
+  ----------
+
+  prediction.ipynb	- Tryout
+  prediction.py 	- Code
+  prediction_output.txt	- Console output of running prediction.py
+  predictions.csv	- delivery_id vs predicted_delivery_seconds 
+
+  Command to run:
+  spark-submit --master local[*] --files log4j.properties prediction.py data_to_predict.json
